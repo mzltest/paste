@@ -20,6 +20,7 @@
     "@architect/functions": "latest",
     "@architect/sandbox": "^5.0.0",
     "@begin/data": "latest",
-    "cross-env": "^7.0.3"
+    "cross-env": "^7.0.3",
+    "node-fetch":"latest"
   }
 }
