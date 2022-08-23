@@ -1,4 +1,5 @@
-import fetch from 'node-fetch'
+const fetch = require("node-fetch");
+
 exports.handler = async function resp(req) {
  if (req.rawPath=='/'){
 
@@ -10,7 +11,23 @@ exports.handler = async function resp(req) {
     statusCode: 404,
     body: 'append dest url after path'
   }}
-  else{}
+  else{
+  
+    url=req.rawPath
+   cookies=req.cookies
+   headers=req.headers
+   headers.host=url.split('/')[0] //set the correct host
+   body=null?req.requestContext.http.method=='GET':req.body
+
+const response = await fetch(url,{method:req.requestContext.http.method,headers:headers,body:body});
+
+    return {
+    headers:response.headers.raw(),
+    statusCode: response.status,
+    body: response.text()
+  }
+  
+  }
   
   
   
