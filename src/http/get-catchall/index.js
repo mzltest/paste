@@ -28,14 +28,14 @@ exports.handler = async function read(req) {
     table: 'texts',
     key:'ZG6RDg5xiM'//req.rawPath.substring(1)
   })
-  console.log(ans.text)
+ // console.log()
    return {
     statusCode: 200,
     headers: {
       'content-type': 'text/plain; charset=utf8',
       'cache-control': 'no-cache, no-store, must-revalidate, max-age=0, s-maxage=0'
     },
-    body: '1234567890'
+    body: ans.text
   }
   }
 catch(e){console.log(e)
