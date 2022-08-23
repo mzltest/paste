@@ -50,14 +50,15 @@ exports.handler = async function resp(req) {
     mb64=''
     music.on('end', () => {
 streamToBase64(music).then(b64=>mb64)
-});
-
+      
     console.log(mb64)
     return {
     headers:{'content-type': 'audio/m4a'},
     statusCode:200,
     body: mb64
   }
+});
+
   
   }
   
