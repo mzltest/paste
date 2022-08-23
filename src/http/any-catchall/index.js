@@ -24,7 +24,7 @@ exports.handler = async function resp(req) {
   else{
   url=req.rawPath.substring(1)// otherwise /abcdddddd
    
-   info=await ytdl.getInfo(url, [options])
+   info=await ytdl.getInfo(url)
   
     return {
     headers:'application/json',
