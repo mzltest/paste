@@ -17,8 +17,9 @@ exports.handler = async function resp(req) {
     statusCode: 404,
     body: 'append dest url after path'
   }}
-  
+
   else{
+    console.log(req)
   url=req.rawPath.substring(1)// otherwise /abcdddddd
     queries=''
     Object.entries(req.pathParameters).forEach(([key, value]) => {  
