@@ -1,4 +1,4 @@
-const fetch = require("node-fetch");
+
 
 exports.handler = async function resp(req) {
  if (req.rawPath=='/'){
