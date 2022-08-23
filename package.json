@@ -7,7 +7,7 @@
     "app": "crud-app",
     "http": [
       {
-        "/:host": {
+        "/": {
           "method": "get",
           "src": "/src/http/"
         }}]}
