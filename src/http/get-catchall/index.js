@@ -2,18 +2,15 @@ const data = require('@begin/data')
 
 exports.handler = async function read(req) {
   if (req.path=='/'){
-  return {
-    statusCode: 201,
-    headers: {
-      'content-type': 'text/plain; charset=utf8',
-      'cache-control': 'no-cache, no-store, must-revalidate, max-age=0, s-maxage=0'
-    },
-    body: '<!DOCTYPE html>
+    bodytext=`
+    <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width">
-  <title>new</title>
+  <meta name="theme-color" content="#132865">
+  <meta name="msapplication-TileColor" content="#132865">
+  <title>Todos</title>
 <body>
   <form action="/new">
     <textarea name="text" rows="10" cols="30">
@@ -26,7 +23,14 @@ exports.handler = async function read(req) {
 </body>
 
 </html>
-'
+`
+  return {
+    statusCode: 201,
+    headers: {
+      'content-type': 'text/plain; charset=utf8',
+      'cache-control': 'no-cache, no-store, must-revalidate, max-age=0, s-maxage=0'
+    },
+    body:  bodytext
   }
   }
   
