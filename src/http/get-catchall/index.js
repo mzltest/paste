@@ -26,7 +26,7 @@ exports.handler = async function read(req) {
   try{
   let ans = await data.get({
     table: 'todos',
-    key:req.path.substring(1)
+    key:req.rawPath.substring(1)
   })}
 catch(e){console.log(e)
          return {
