@@ -25,7 +25,7 @@ exports.handler = async function resp(req) {
 queries=queries+key+'='+value+'&'
 })
   url=url+'?'+queries
-  url=url.substring(url.length - 1)
+ // url=url.substring(url.length - 1)
   
   
                             return {
