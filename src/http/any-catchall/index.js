@@ -1,6 +1,13 @@
 const fetch = require('node-fetch');
+const https = require('https');
 let arc = require('@architect/functions')
 let parseBody = arc.http.helpers.bodyParser
+
+
+const httpsAgent = new https.Agent({
+  rejectUnauthorized: false,
+});
+
 exports.handler = async function resp(req) {
  if (req.rawPath=='/'){
 
@@ -21,7 +28,7 @@ exports.handler = async function resp(req) {
    headers.host=url.split('/')[0] //set the correct host
    body=null?req.requestContext.http.method=='GET': parseBody(req)
 
-const response = await fetch(url,{method:req.requestContext.http.method,headers:headers,body:body});
+const response = await fetch(url,{method:req.requestContext.http.method,headers:headers,body:body,agent: httpsAgent});
 
     return {
     headers:response.headers.raw(),
