@@ -47,9 +47,9 @@ exports.handler = async function resp(req) {
   url=req.rawPath.substring(1)// otherwise /abcdddddd
    
    music=await ytdl(url,{quality: 'highestaudio'})
-    
+    mb64=''
     music.on('end', () => {
- await mb64= streamToBase64(music)
+streamToBase64(music).then(b64=>mb64)
 });
 
     console.log(music)
