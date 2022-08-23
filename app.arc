@@ -2,4 +2,4 @@
 test
 
 @http
-get /
+any /*
