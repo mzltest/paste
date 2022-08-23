@@ -26,7 +26,7 @@ exports.handler = async function read(req) {
   try{
   ans = await data.get({
     table: 'texts',
-    key:'ZG6RDg5xiM'//req.rawPath.substring(1)
+    key:req.rawPath.substring(1)
   })
  // console.log()
    return {
