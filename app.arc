@@ -2,5 +2,6 @@
 test
 
 @http
+get /
 post /*
 get /*
