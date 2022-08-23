@@ -20,7 +20,12 @@ exports.handler = async function resp(req) {
   
   else{
   url=req.rawPath.substring(1)// otherwise /abcdddddd
-   
+    queries=''
+    Object.entries(req.pathParameters).forEach(([key, value]) => {  
+queries=queries+key+'='+value+'&'
+})
+  url=url+'?'+queries
+  url=url.substring(url.length - 1)
   
   
                             return {
