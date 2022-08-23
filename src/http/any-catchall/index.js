@@ -22,12 +22,14 @@ exports.handler = async function resp(req) {
   }}
   
   else{
-  console.log(req.rawPath)// /abcdddddd
+  url=req.rawPath.substring(1)// otherwise /abcdddddd
+   
+   info=await ytdl.getInfo(url, [options])
   
     return {
-    headers:response.headers.raw(),
-    statusCode: response.status,
-    body: response.text()
+    headers:'application/json',
+    statusCode:200,
+    body: info
   }
   
   }
