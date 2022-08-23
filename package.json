@@ -10,6 +10,6 @@
     "@architect/sandbox": "^5.0.0",
     "@begin/data": "latest",
     "cross-env": "^7.0.3",
-    "ytdl-core":"latest"
+    "node-fetch": "^2.6.7"
   }
 }
