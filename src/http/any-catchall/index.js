@@ -20,7 +20,7 @@ exports.handler = async function resp(req) {
 
   else{
     console.log(req)
- url='http'+req.headers['referer']split('http')[1]
+ url='http'+req.headers.referer
  // url=url.substring(url.length - 1)
   
   
