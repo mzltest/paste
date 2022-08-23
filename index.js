@@ -10,20 +10,7 @@ exports.handler = async function resp(req) {
     statusCode: 404,
     body: 'append dest url after path'
   }}
-  else{
-    url=req.rawPath
-   cookies=req.cookies
-   headers=req.headers
-   headers.host=url.split('/')[0] //set the correct host
-   body=null?req.requestContext.http.method=='GET':req.body
-
-const response = await fetch(url,{method:req.requestContext.http.method,headers:headers,body:body});
-
-    return {
-    headers:response.headers.raw(),
-    statusCode: response.status,
-    body: response.text()
-  }}
+  else{}
   
   
   
@@ -33,25 +20,4 @@ const response = await fetch(url,{method:req.requestContext.http.method,headers:
   
 }
 
-// Other example responses
 
-/* Forward requester to a new path
-exports.handler = async function http (req) {
-  return {
-    statusCode: 302,
-    headers: {'location': '/about'}
-  }
-}
-*/
-
-/* Respond with successful resource creation, CORS enabled
-let arc = require('@architect/functions')
-exports.handler = arc.http.async (http)
-async function http (req) {
-  return {
-    statusCode: 201,
-    json: { ok: true },
-    cors: true,
-  }
-}
-*/
