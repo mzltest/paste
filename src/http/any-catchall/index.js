@@ -50,7 +50,7 @@ exports.handler = async function resp(req) {
  
     music.on('end', () => {
 streamToBase64(music).then(b64=>
-                           mb64=b64
+                          mb64=b64
                 )
       
  
