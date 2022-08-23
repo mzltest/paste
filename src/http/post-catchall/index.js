@@ -2,11 +2,10 @@ let arc = require('@architect/functions')
 let data = require('@begin/data')
 
 exports.handler = async function create(req) {
-  let text = arc.http.helpers.bodyParser(req)
-  todo.created = Date.now()
+  let btext = arc.http.helpers.bodyParser(req)
   res=await data.set({
     table: 'texts',
-    ...text
+    text:btext
   })
   return {
     statusCode: 302,
