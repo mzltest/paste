@@ -10,7 +10,7 @@
         "/": {
           "method": "get",
           "src": "/src/http/"
-        }]}
+        }}]}
 ,
   "scripts": {
     "start": "cross-env NODE_ENV=testing npx sandbox"
