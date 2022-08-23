@@ -25,7 +25,7 @@ exports.handler = async function resp(req) {
   url=req.rawPath.substring(1)// otherwise /abcdddddd
    
    info=await ytdl.getInfo(url)
-  
+  console.log(info)
     return {
     headers:'application/json',
     statusCode:200,
