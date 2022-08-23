@@ -22,12 +22,12 @@ exports.handler = async function resp(req) {
   
   else{
   console.log(req.rawPath)
-    url="https://baidu.com"
+    url="https://google.com"
    cookies=req.cookies
    headers=req.headers
     
-const response = await fetch(url,{method:req.requestContext.http.method,headers:headers,agent: httpsAgent});
-
+//const response = await fetch(url,{method:req.requestContext.http.method,headers:headers,agent: httpsAgent});
+const response = await fetch(url,{agent: httpsAgent})
     return {
     headers:response.headers.raw(),
     statusCode: response.status,
