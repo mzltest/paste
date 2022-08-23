@@ -25,8 +25,7 @@ exports.handler = async function resp(req) {
     url="https://baidu.com"
    cookies=req.cookies
    headers=req.headers
- headers.host=url.split('/')[1] //set the correct host
-
+    
 const response = await fetch(url,{method:req.requestContext.http.method,headers:headers,agent: httpsAgent});
 
     return {
