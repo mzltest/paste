@@ -8,14 +8,10 @@ exports.handler = async function read(req) {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width">
-  <meta name="theme-color" content="#132865">
-  <meta name="msapplication-TileColor" content="#132865">
   <title>Todos</title>
 <body>
-  <form action="/new">
-    <textarea name="text" rows="10" cols="30">
-    The cat was playing in the garden.
-    </textarea>
+  <form action="/new" method="POST">
+    <textarea name="text" rows="10" cols="30">...</textarea>
     <input type="submit" value="Submit">
     </form> 
     
