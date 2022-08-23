@@ -5,7 +5,7 @@ exports.handler = async function create(req) {
   let btext = arc.http.helpers.bodyParser(req)
   res=await data.set({
     table: 'texts',
-    text:btext
+    ...btext
   })
   return {
     statusCode: 302,
