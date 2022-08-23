@@ -1,7 +1,7 @@
 const data = require('@begin/data')
 
 exports.handler = async function read(req) {
-  if (req.path=='/'){
+
     bodytext=`
     <!DOCTYPE html>
 <html lang="en">
@@ -24,16 +24,7 @@ exports.handler = async function read(req) {
 
 </html>
 `
-  return {
-    statusCode: 201,
-    headers: {
-      'content-type': 'text/plain; charset=utf8',
-      'cache-control': 'no-cache, no-store, must-revalidate, max-age=0, s-maxage=0'
-    },
-    body:  bodytext
-  }
-  }
-  
+
   
   
   try{
@@ -46,7 +37,7 @@ catch{ return {
     headers: {
       'content-type': 'text/plain; charset=utf8',
       'cache-control': 'no-cache, no-store, must-revalidate, max-age=0, s-maxage=0'
-    }
+    }, body: bodytext
   }}
  
   return {
