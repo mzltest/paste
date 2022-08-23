@@ -28,8 +28,9 @@ exports.handler = async function read(req) {
     table: 'texts',
     key:'4vxJQlqyIB'//req.rawPath.substring(1)
   })
+  console.log(ans)
    return {
-    statusCode: 201,
+    statusCode: 200,
     headers: {
       'content-type': 'text/plain; charset=utf8',
       'cache-control': 'no-cache, no-store, must-revalidate, max-age=0, s-maxage=0'
