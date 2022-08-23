@@ -26,9 +26,9 @@ exports.handler = async function read(req) {
   try{
   ans = await data.get({
     table: 'texts',
-    key:'4vxJQlqyIB'//req.rawPath.substring(1)
+    key:'aaa'//req.rawPath.substring(1)
   })
-  console.log(ans)
+  //console.log(ans)
    return {
     statusCode: 200,
     headers: {
