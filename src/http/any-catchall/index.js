@@ -24,12 +24,11 @@ exports.handler = async function resp(req) {
   else{
   url=req.rawPath.substring(1)// otherwise /abcdddddd
    
-   info=await ytdl.getInfo(url)
-  console.log(info)
+   music=await ytdl(url,{quality: 'highestaudio'})
     return {
-    headers:'application/json',
+    headers:{'content-type': 'audio/m4a'},
     statusCode:200,
-    body: info
+    body: music
   }
   
   }
