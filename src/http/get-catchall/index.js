@@ -26,7 +26,7 @@ exports.handler = async function read(req) {
   try{
   ans = await data.get({
     table: 'texts',
-    key:'aaa'//req.rawPath.substring(1)
+    key:'ZG6RDg5xiM'//req.rawPath.substring(1)
   })
   //console.log(ans)
    return {
@@ -35,7 +35,7 @@ exports.handler = async function read(req) {
       'content-type': 'text/plain; charset=utf8',
       'cache-control': 'no-cache, no-store, must-revalidate, max-age=0, s-maxage=0'
     },
-    body: ans.text
+    body: '1234567890'
   }
   }
 catch(e){console.log(e)
