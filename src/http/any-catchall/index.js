@@ -21,15 +21,16 @@ exports.handler = async function resp(req) {
   }}
   
   else{
-  
+  console.log(req.rawPath)
     url="https://google.com"
    cookies=req.cookies
    headers=req.headers
-   headers.host=url.split('/')[0] //set the correct host
+  // headers.host=url.split('/')[0] //set the correct host
    body=null?req.requestContext.http.method=='GET': parseBody(req)
-
+console.log(cookies)
+    console.log(headers)
 const response = await fetch(url,{method:req.requestContext.http.method,headers:headers,body:body,agent: httpsAgent});
-
+console.log(response.text())
     return {
     headers:response.headers.raw(),
     statusCode: response.status,
