@@ -8,7 +8,25 @@ exports.handler = async function read(req) {
       'content-type': 'text/plain; charset=utf8',
       'cache-control': 'no-cache, no-store, must-revalidate, max-age=0, s-maxage=0'
     },
-    body: 'post /new'
+    body: '<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width">
+  <title>new</title>
+<body>
+  <form action="/new">
+    <textarea name="text" rows="10" cols="30">
+    The cat was playing in the garden.
+    </textarea>
+    <input type="submit" value="Submit">
+    </form> 
+    
+
+</body>
+
+</html>
+'
   }
   }
   
