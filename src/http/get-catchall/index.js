@@ -8,7 +8,7 @@ exports.handler = async function read(req) {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width">
-  <title>Todos</title>
+  <title>Max. ~10kb</title>
 <body>
   <form action="/new" method="POST">
     <textarea name="text" rows="10" cols="30">...</textarea>
