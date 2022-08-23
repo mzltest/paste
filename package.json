@@ -3,12 +3,14 @@
   "version": "0.0.0",
   "description": "Begin basic Hello World! app for Node",
   
-  "arc": {
-    "app": "myapp",
+"arc": {
+    "app": "crud-app",
     "http": [
-      [ "get", "/" ]
-    ]
-  }
+      {
+        "/": {
+          "method": "get",
+          "src": "/src/http/"
+        }]}
 ,
   "scripts": {
     "start": "cross-env NODE_ENV=testing npx sandbox"
