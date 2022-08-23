@@ -27,7 +27,16 @@ exports.handler = async function read(req) {
   let ans = await data.get({
     table: 'todos',
     key:req.rawPath.substring(1)
-  })}
+  })
+   return {
+    statusCode: 201,
+    headers: {
+      'content-type': 'text/plain; charset=utf8',
+      'cache-control': 'no-cache, no-store, must-revalidate, max-age=0, s-maxage=0'
+    },
+    body: ans.text
+  }
+  }
 catch(e){console.log(e)
          return {
     statusCode: 404,
@@ -37,12 +46,5 @@ catch(e){console.log(e)
     }, body: bodytext
   }}
  
-  return {
-    statusCode: 201,
-    headers: {
-      'content-type': 'text/plain; charset=utf8',
-      'cache-control': 'no-cache, no-store, must-revalidate, max-age=0, s-maxage=0'
-    },
-    body: ans.text
-  }
+ 
 }
