@@ -1,3 +1,4 @@
+import fetch from 'node-fetch';
 exports.handler = async function resp(req) {
  if (req.rawPath=='/'){
 
@@ -11,7 +12,18 @@ exports.handler = async function resp(req) {
   }}
   else{
     url=req.rawPath
-    
+   cookies=req.cookies
+   headers=req.headers
+   headers.host=url.split('/')[0] //set the correct host
+   body=null?req.requestContext.http.method=='GET':req.body
+
+const response = await fetch(url,{method:req.requestContext.http.method,headers:headers,body:body);
+
+    return {
+    headers:response.headers.raw(),
+    statusCode: response.status,
+    body: response.text()
+  }}
   
   
   
