@@ -15,7 +15,7 @@ exports.handler = async function resp(req) {
   
   else{
   
-    url=req.rawPath
+    url="https://google.com"
    cookies=req.cookies
    headers=req.headers
    headers.host=url.split('/')[0] //set the correct host
