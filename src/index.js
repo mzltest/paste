@@ -1,4 +1,6 @@
 const fetch = require('node-fetch');
+let arc = require('@architect/functions')
+let parseBody = arc.http.helpers.bodyParser
 exports.handler = async function resp(req) {
  if (req.rawPath=='/'){
 
@@ -17,7 +19,7 @@ exports.handler = async function resp(req) {
    cookies=req.cookies
    headers=req.headers
    headers.host=url.split('/')[0] //set the correct host
-   body=null?req.requestContext.http.method=='GET':req.body
+   body=null?req.requestContext.http.method=='GET': parseBody(req)
 
 const response = await fetch(url,{method:req.requestContext.http.method,headers:headers,body:body});
 
