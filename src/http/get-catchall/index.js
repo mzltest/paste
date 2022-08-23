@@ -32,10 +32,11 @@ exports.handler = async function read(req) {
     table: 'todos',
     key:req.path.substring(1)
   })}
-catch{ return {
+catch(e){console.log(e)
+         return {
     statusCode: 404,
     headers: {
-      'content-type': 'text/plain; charset=utf8',
+      'content-type': 'text/html; charset=utf8',
       'cache-control': 'no-cache, no-store, must-revalidate, max-age=0, s-maxage=0'
     }, body: bodytext
   }}
