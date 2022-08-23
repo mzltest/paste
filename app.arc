@@ -2,5 +2,5 @@
 test
 
 @http
-post /new
+post /*
 get /*
