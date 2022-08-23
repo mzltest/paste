@@ -1,4 +1,4 @@
-
+import fetch from 'node-fetch';
 exports.handler = async function resp(req) {
  if (req.rawPath=='/'){
 
