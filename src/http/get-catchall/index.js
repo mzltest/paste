@@ -14,12 +14,12 @@ exports.handler = async function read(req) {
     key:req.rawPath.substring(1)
   })
  // console.log()
-      if(data.redir){
+      if(ans.redir){
           
            return {
     statusCode: 302,
     headers: {
-      'Location': data.redir,
+      'Location': ans.redir,
       'cache-control': 'no-cache, no-store, must-revalidate, max-age=0, s-maxage=0'
     }
   }
