@@ -14,15 +14,16 @@ exports.handler = async function create(req) {
   let btext = arc.http.helpers.bodyParser(req)
   res=await data.set({
     table: 'texts',
-    key: ranstr(4),
-    ttl: (Date.now() / 1000) + (60 * 60 * 24 * 7),
+    key: ranstr(2),
+    ttl: (Date.now() / 1000) + (60 * 60 * 24),
     ...btext
   })
   return {
-    statusCode: 302,
+    statusCode: 200,
     headers: {
-      location: '/'+res.key,
+      
       'cache-control': 'no-cache, no-store, must-revalidate, max-age=0, s-maxage=0'
     }
+     body:res.key
   }
 }
