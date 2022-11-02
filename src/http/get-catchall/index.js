@@ -3,22 +3,7 @@ const data = require('@begin/data')
 exports.handler = async function read(req) {
 
     bodytext=`
-    <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width">
-  <title>Max. ~10kb</title>
-<body>
-  <form action="/new" method="POST">
-    <textarea name="text" rows="10" cols="30">...</textarea>
-    <input type="submit" value="Submit">
-    </form> 
-    
-
-</body>
-
-</html>
+   no such key :(
 `
 
   
@@ -29,6 +14,16 @@ exports.handler = async function read(req) {
     key:req.rawPath.substring(1)
   })
  // console.log()
+      if(data.redir){
+          
+           return {
+    statusCode: 302,
+    headers: {
+      'Location': data.redir,
+      'cache-control': 'no-cache, no-store, must-revalidate, max-age=0, s-maxage=0'
+    }
+  }
+      }
    return {
     statusCode: 200,
     headers: {
