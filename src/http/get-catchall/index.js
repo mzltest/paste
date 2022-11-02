@@ -11,7 +11,7 @@ exports.handler = async function read(req) {
   try{
   ans = await data.get({
     table: 'texts',
-    key:req.rawPath.substring(1)
+    key:req.rawPath.substring(1).toLowerCase()
   })
  // console.log()
       if(ans.redir){
