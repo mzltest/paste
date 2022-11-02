@@ -14,7 +14,7 @@ exports.handler = async function create(req) {
   let btext = arc.http.helpers.bodyParser(req)
   res=await data.set({
     table: 'texts',
-    key: ranstr(2),
+    key: ranstr(4),
     ttl: (Date.now() / 1000) + (60 * 60 * 24),
     ...btext
   })
