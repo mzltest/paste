@@ -10,7 +10,7 @@ exports.handler = async function read(req) {
 <body>
 <form action="/new" method="POST">
   <textarea name="text" rows="10" cols="30"></textarea><hr>
- or url(will redirect) <input type="text" name="url">
+ or url(will redirect) <input type="text" name="redir">
   <input type="submit" value="Submit">
   </form> 
   
