@@ -9,7 +9,8 @@ exports.handler = async function read(req) {
 <title>Max. ~10kb</title>
 <body>
 <form action="/new" method="POST">
-  <textarea name="text" rows="10" cols="30"></textarea>
+  <textarea name="text" rows="10" cols="30"></textarea><hr>
+ or url(will redirect) <input type="text" name="url">
   <input type="submit" value="Submit">
   </form> 
   
