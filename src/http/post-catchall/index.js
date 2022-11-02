@@ -15,7 +15,7 @@ exports.handler = async function create(req) {
   res=await data.set({
     table: 'texts',
     key: ranstr(4),
-    ttl: (Date.now() / 1000) + (60 * 60 * 24),
+    ttl: (Date.now() / 1000) + (60 * 60 * 24 * 7),
     ...btext
   })
   return {
