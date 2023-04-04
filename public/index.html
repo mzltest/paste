@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Max. ~10kb</title>
+  <!-- 引入Bootstrap -->
+  <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css">
+</head>
+<body>
+  <div class="container mt-5">
+    <form action="/new" method="POST">
+      <div class="form-group">
+        <label for="text">Text:</label>
+        <textarea class="form-control" name="text" rows="10" cols="30"></textarea>
+      </div>
+      <hr>
+      <div class="form-group">
+        <label for="redir">URL:</label>
+        <input class="form-control" type="text" name="redir">
+      </div>
+      <button class="btn btn-primary" type="submit">Submit</button>
+    </form> 
+  </div>
+  <!-- 引入jQuery和Bootstrap的JS -->
+  <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
+</body>
+</html>
