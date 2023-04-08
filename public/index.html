@@ -55,6 +55,7 @@
     })
 
     function searchVideos(query) {
+      currentVideo=''
       updateUrlState()
       $('#search-results').html('<div class="text-center"><div class="spinner-border" role="status"><span class="visually-hidden">Loading...</span></div></div>')
       fetch(`${apiBase}/api/search/${encodeURIComponent(query)}`)
