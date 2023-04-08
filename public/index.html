@@ -147,9 +147,9 @@
       let videoHtml = ''
       formats.forEach((format) => {
         if (format.hasAudio && !format.hasVideo) {
-          audioHtml += buildDownloadLinkHtml(format.url, `音频 ${format.qualityLabel} ${format.container}`)
+          audioHtml += buildDownloadLinkHtml(format.url, `音频 ${format.audioBitrate} ${format.audioCodec} ${format.container}`)
         } else if (format.hasVideo) {
-          videoHtml += buildDownloadLinkHtml(format.url, `视频 ${format.qualityLabel} ${format.container}`)
+          videoHtml += buildDownloadLinkHtml(format.url, `视频 ${format.bitrate} ${format.width}x${format.height}@${format.fps} ${format.container}`)
         }
       })
       return `
