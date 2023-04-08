@@ -13,6 +13,6 @@
     "@begin/data": "^4.0.2",
     "node-fetch": "^2.6.9",
     "youtube-search-without-api-key": "1.0.7",
-    "ytdl-core": "^4.9.1"
+    "ytdl-core": "4.9.1"
   }
 }
