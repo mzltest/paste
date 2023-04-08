@@ -55,6 +55,7 @@
     })
 
     function searchVideos(query) {
+      updateUrlState()
       $('#search-results').html('<div class="text-center"><div class="spinner-border" role="status"><span class="visually-hidden">Loading...</span></div></div>')
       fetch(`${apiBase}/api/search/${encodeURIComponent(query)}`)
         .then(response => response.json())
@@ -82,9 +83,11 @@
           $('#search-results').html('<div class="alert alert-danger" role="alert">发生错误，请稍后再试</div>')
         })
     }
-
+    
     function showVideoDetails(id) {
+      
       currentVideo = id
+      updateUrlState()
       const url = `${apiBase}/api/info/${id}`
       $('#video-details-modal-title').html('正在加载...')
       $('#video-details-modal-body').html('<div class="text-center"><div class="spinner-border" role="status"><span class="visually-hidden">Loading...</span></div></div>')
@@ -174,6 +177,35 @@
     function getVideoInfo(id) {
       showVideoDetails(id)
     }
+    function updateUrlState() {
+  const urlParams = new URLSearchParams(window.location.search)
+  if (currentVideo) {
+    urlParams.delete('q')
+    urlParams.set('i', currentVideo)
+  }else if (searchQuery) {
+    urlParams.delete('i')
+    urlParams.set('q', encodeURIComponent(searchQuery))
+  } 
+  const newUrl = `${window.location.pathname}?${urlParams.toString()}`
+  window.history.pushState({ path: newUrl }, '', newUrl)
+}
+
+function readUrlState() {
+  const urlParams = new URLSearchParams(window.location.search)
+  const query = urlParams.get('q')
+  const id = urlParams.get('i')
+  if (query) {
+    searchQuery = decodeURIComponent(query)
+    $('#search-input').val(searchQuery)
+    searchVideos(searchQuery)
+  } else if (id) {
+    currentVideo = id
+    getVideoInfo(id)
+  }
+}
+window.addEventListener("load", (event) => {
+  readUrlState()
+});
   </script>
   <div class="modal fade" id="video-details-modal" tabindex="-1" aria-labelledby="video-details-modal-title" aria-hidden="true">
     <div class="modal-dialog modal-xl">
