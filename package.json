@@ -9,7 +9,7 @@
     "@architect/architect": "^10.10.3"
   },
   "dependencies": {
-    "@architect/functions": "^5.4.0",
+    "@architect/functions": "5.4.0",
     "@begin/data": "^4.0.2",
     "node-fetch": "^2.6.9",
     "youtube-search-without-api-key": "1.0.7",
