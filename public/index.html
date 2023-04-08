@@ -159,6 +159,7 @@
           }
       
           // 设置下载链接
+          formats=infoData.formats
           downloadLinks.innerHTML = '';
           for (const format of formats) {
             const downloadUrl = format.url;
