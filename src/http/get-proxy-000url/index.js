@@ -63,6 +63,7 @@ exports.handler = async function proxy(request) {
       }
       console.log("start:", start, "end:", end);
       res=await downloadPartial(url,start,end)
+      console.log(res)
 return{statusCode:res.status,headers:{'Content-Type':res.contentType,'Range':res.contentRange,'Accept-Ranges':'bytes'},isBase64Encoded:true,body:res.data}
 
 }
