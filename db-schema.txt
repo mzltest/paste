@@ -1,0 +1,37 @@
+T:boards 根版面列表
+{
+    'key':版面ID,0+,
+    'name':实际名称
+    'desc':描述,
+    'minSecLevel':发布内容要求的secLevel
+}
+T:b-:bID 串列表
+{
+    'key':串id,是个数字,
+    'title':标题
+    'content':内容
+    'author':user:ident
+    'minSecLevel':发布内容要求的secLevel
+}
+
+T:c-:cID 串下属的post列表
+{   'key':pID,
+    'content':回复是只有内容的,
+    'replyTo':nullable/cID
+    'author':user:ident
+
+}
+
+users 用户表
+{ 'key':author的identkey 服务端自动生成的
+    'pass':用户的passpharse 浏览器端自动生成的
+    'secLevel':安全级
+    'pendingChallenge':{
+        'destLevel':目标安全级
+        'requestedPrefix':要求的前缀，array of bytes？
+        'requetedContentPrefix':要求的内容前缀
+    }
+
+}
+
+secLevel是算给定前缀的sha1

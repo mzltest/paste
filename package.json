@@ -1,14 +1,18 @@
 {
-  "name": "begin-app",
+  "name": "aaaaaa",
   "version": "0.0.0",
-  "description": "Begin basic Hello World! app for Node",
+  "description": "A fresh new Architect project!",
   "scripts": {
-    "start": "cross-env NODE_ENV=testing npx sandbox"
+    "start": "npx sandbox"
   },
   "devDependencies": {
-    "@architect/functions": "latest",
-    "@architect/sandbox": "^5.0.0",
-    "@begin/data": "latest",
-    "cross-env": "^7.0.3"
+    "@architect/architect": "^10.10.3"
+  },
+  "dependencies": {
+    "@architect/functions": "^5.4.0",
+    "@begin/data": "^4.0.2",
+    "node-fetch": "^2.6.9",
+    "youtube-search-without-api-key": "^1.0.7",
+    "ytdl-core": "^4.9.1"
   }
 }
