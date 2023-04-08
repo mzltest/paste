@@ -11,166 +11,186 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="#">Video Search Tool</a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarNav">
-            <form class="d-flex mx-auto my-2 my-lg-0" id="search-form">
-              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" id="search-input">
-              <button class="btn btn-outline-success" type="submit">Search</button>
-            </form>
+  <div class="container">
+    <h1>视频搜索和详情查看工具</h1>
+    <div class="row">
+      <div class="col-md-6">
+        <form id="search-form">
+          <div class="mb-3">
+            <label for="search-input" class="form-label">输入搜索词</label>
+            <input type="text" class="form-control" id="search-input" placeholder="请输入搜索词">
           </div>
-        </div>
-      </nav>
-      
-      <div class="container my-4">
-        <div class="row" id="search-results">
-        </div>
+          <button type="submit" class="btn btn-primary">搜索</button>
+        </form>
       </div>
-      
-      <div class="modal" tabindex="-1" role="dialog" id="video-modal">
-        <div class="modal-dialog modal-dialog-scrollable modal-xl" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="video-modal-title"></h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-              <div class="row">
-                <div class="col-md-4">
-                  <img src="" alt="" class="img-fluid" id="video-thumbnail">
-                </div>
-                <div class="col-md-8">
-                  <p id="video-description"></p>
-                  <div id="video-player"></div>
-                </div>
-              </div>
-              <hr>
-              <h5>Related Videos:</h5>
-              <div class="row" id="related-videos">
-              </div>
-              <hr>
-              <h5>Download Links:</h5>
-              <ul id="download-links">
-              </ul>
-            </div>
-          </div>
-        </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="mt-3" id="search-results"></div>
       </div>
-      
-      <script>
-        // 获取各个需要用到的元素
-        const searchForm = document.querySelector('#search-form');
-        const searchInput = document.querySelector('#search-input');
-        const searchResults = document.querySelector('#search-results');
-        const videoModal = document.querySelector('#video-modal');
-        const videoModalTitle = document.querySelector('#video-modal-title');
-        const videoThumbnail = document.querySelector('#video-thumbnail');
-        const videoDescription = document.querySelector('#video-description');
-        const videoPlayer = document.querySelector('#video-player');
-        const relatedVideos = document.querySelector('#related-videos');
-        const downloadLinks = document.querySelector('#download-links');
-      
-        // 绑定搜索表单提交事件
-        searchForm.addEventListener('submit', async (event) => {
-          event.preventDefault();
-          const query = searchInput.value.trim();
-          if (query === '') {
-            return;
-          }
-      
-          // 发送搜索请求
-          const searchResponse = await fetch(`/api/search/${encodeURIComponent(query)}`);
-          const searchResultsData = await searchResponse.json();
-      
-          // 清空搜索结果
-          searchResults.innerHTML = '';
-      
-          // 添加搜索结果
-          for (const resultData of searchResultsData) {
-            const videoId = resultData.id.videoId;
-            const videoUrl = `https://www.youtube.com/watch?v=${videoId}`;
-            const thumbnailUrl = `/proxy/${encodeURIComponent(resultData.snippet.thumbnails.high.url)}`;
-            const title = resultData.snippet.title;
-            const durationRaw = resultData.duration_raw;
-            const views = resultData.views;
-      
-            const resultHtml = `
-              <div class="col-md-4 mb-4">
-                <div class="card">
-                  <img src="${thumbnailUrl}" alt="${title}" class="card-img-top">
+    </div>
+  </div>
+  <script>
+    const apiBase = ""
+    let searchQuery = null
+    let currentVideo = null
+
+    $(document).ready(() => {
+      const urlParams = new URLSearchParams(window.location.search)
+      const query = urlParams.get('q')
+      const id = urlParams.get('i')
+      if (query) {
+        searchQuery = query
+        $('#search-input').val(searchQuery)
+        searchVideos(searchQuery)
+      } else if (id) {
+        getVideoInfo(id)
+      }
+    })
+
+    $('#search-form').submit((event) => {
+      event.preventDefault()
+      searchQuery = $('#search-input').val()
+      searchVideos(searchQuery)
+    })
+
+    function searchVideos(query) {
+      $('#search-results').html('<div class="text-center"><div class="spinner-border" role="status"><span class="visually-hidden">Loading...</span></div></div>')
+      fetch(`${apiBase}/api/search/${encodeURIComponent(query)}`)
+        .then(response => response.json())
+        .then(data => {
+          let html = ''
+          if (data.length === 0) {
+            html = '<div class="alert alert-warning" role="alert">没有找到相关视频</div>'
+          } else {
+            data.forEach((item) => {
+              html += `
+                <div class="card mb-3">
                   <div class="card-body">
-                    <h5 class="card-title">${title}</h5>
-                    <p class="card-text">${durationRaw} - ${views} views</p>
-                    <a href="${videoUrl}" class="btn btn-primary" target="_blank">Watch on YouTube</a>
-                    <button class="btn btn-secondary" data-video-id="${videoId}" data-bs-toggle="modal" data-bs-target="#video-modal">View Details</button>
+                    <h5 class="card-title">${item.title}</h5>
+                    <p class="card-text">${item.description}</p>
+                    <button class="btn btn-primary" onclick="showVideoDetails('${item.id.videoId}')">查看详情</button>
                   </div>
                 </div>
-              </div>
-            `;
-            searchResults.insertAdjacentHTML('beforeend', resultHtml);
+              `
+            })
           }
-        });
-      
-        // 绑定视频详情 modal 显示事件
-        videoModal.addEventListener('show.bs.modal', async (event) => {
-          const button = event.relatedTarget;
-          const videoId = button.getAttribute('data-video-id');
-      
-          // 发送视频详情请求
-          const infoResponse = await fetch(`/api/info/${videoId}`);
-          const infoData = await infoResponse.json();
-      
-          // 设置 modal 标题
-          videoModalTitle.textContent = infoData.videoDetails.title;
-      
-          // 设置缩略图
-          const thumbnailUrl = infoData.videoDetails.thumbnails.pop().url;
-          videoThumbnail.src = thumbnailUrl;
-      
-          // 设置视频描述
-          videoDescription.textContent = infoData.videoDetails.description;
-      
-          // 设置相关视频
-          relatedVideos.innerHTML = '';
-          for (const relatedVideoData of infoData.related_videos) {
-            const relatedVideoId = relatedVideoData.id;
-            const relatedVideoUrl = `https://www.youtube.com/watch?v=${relatedVideoId}`;
-            const relatedVideoTitle = relatedVideoData.title;
-            const relatedVideoThumbnailUrl = `/proxy/${encodeURIComponent(relatedVideoData.thumbnails[0].url)}`;
-            const relatedVideoViews = relatedVideoData.short_view_count_text;
-      
-            const relatedVideoHtml = `
-              <div class="col-md-3 mb-3">
-                <div class="card">
-                  <img src="${relatedVideoThumbnailUrl}" alt="${relatedVideoTitle}" class="card-img-top">
-                  <div class="card-body">
-                    <h5 class="card-title">${relatedVideoTitle}</h5>
-                    <p class="card-text">${relatedVideoViews} views</p>
-                    <a href="${relatedVideoUrl}" class="btn btn-primary" target="_blank">Watch on YouTube</a>
-                  </div>
+          $('#search-results').html(html)
+        })
+        .catch(error => {
+          console.error(error)
+          $('#search-results').html('<div class="alert alert-danger" role="alert">发生错误，请稍后再试</div>')
+        })
+    }
+
+    function showVideoDetails(id) {
+      currentVideo = id
+      const url = `${apiBase}/api/info/${id}`
+      $('#video-details-modal-title').html('正在加载...')
+      $('#video-details-modal-body').html('<div class="text-center"><div class="spinner-border" role="status"><span class="visually-hidden">Loading...</span></div></div>')
+      $('#video-details-modal').modal('show')
+      fetch(url)
+        .then(response => response.json())
+        .then(data => {
+          const videoDetailsHtml = buildVideoDetailsHtml(data.videoDetails)
+          const relatedVideosHtml = buildRelatedVideosHtml(data.related_videos)
+          const downloadLinksHtml = buildDownloadLinksHtml(data.formats)
+          $('#video-details-modal-title').html(data.videoDetails.title)
+          $('#video-details-modal-body').html(`
+            <div class="row">
+              <div class="col-md-8">
+                <div class="embed-responsive embed-responsive-16by9">
+                  <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/${id}?autoplay=1" allowfullscreen></iframe>
                 </div>
+                ${videoDetailsHtml}
+                ${relatedVideosHtml}
               </div>
-            `;
-            relatedVideos.insertAdjacentHTML('beforeend', relatedVideoHtml);
-          }
-      
-          // 设置下载链接
-          formats=infoData.formats
-          downloadLinks.innerHTML = '';
-          for (const format of formats) {
-            const downloadUrl = format.url;
-            const downloadLinkHtml = `
-              <li>
-                <a href="${downloadUrl}" target="_blank">${format.qualityLabel} (${format.container}) - ${format.bitrate / 1000}kbps</a>
-              </li>
-            `;
-            downloadLinks.insertAdjacentHTML('beforeend', downloadLinkHtml);
-          }
-        });
-      </script>
-      </body>
-      </html>      
+              <div class="col-md-4">
+                ${downloadLinksHtml}
+              </div>
+            </div>
+          `)
+        })
+        .catch(error => {
+          console.error(error)
+          $('#video-details-modal-title').html('发生错误')
+          $('#video-details-modal-body').html('<div class="alert alert-danger" role="alert">发生错误，请稍后再试</div>')
+        })
+    }
+
+    function buildVideoDetailsHtml(videoDetails) {
+      return `
+        <h4>视频详情</h4>
+        <ul>
+          <li>发布时间：${videoDetails.publishDate}</li>
+          <li>时长：${formatDuration(videoDetails.lengthSeconds)}</li>
+          <li>观看次数：${videoDetails.viewCount}</li>
+        </ul>
+      `
+    }
+
+    function buildRelatedVideosHtml(relatedVideos) {
+      let html = ''
+      if (relatedVideos.length > 0) {
+        html += '<h4>相关视频</h4>'
+        html += '<ul>'
+        relatedVideos.forEach((item) => {
+          html += `<li><a href="#" onclick="showVideoDetails('${item.id}')">${item.title}</a></li>`
+        })
+        html += '</ul>'
+      }
+      return html
+    }
+
+    function buildDownloadLinksHtml(formats) {
+      let audioHtml = ''
+      let videoHtml = ''
+      formats.forEach((format) => {
+        if (format.hasAudio && !format.hasVideo) {
+          audioHtml += buildDownloadLinkHtml(format.url, `音频 ${format.qualityLabel} ${format.container}`)
+        } else if (format.hasVideo) {
+          videoHtml += buildDownloadLinkHtml(format.url, `视频 ${format.qualityLabel} ${format.container}`)
+        }
+      })
+      return `
+        <h4>下载链接</h4>
+        <ul>
+          ${audioHtml}
+          ${videoHtml}
+        </ul>
+      `
+    }
+
+    function buildDownloadLinkHtml(url, label) {
+      return `<li><a href="${url}" target="_blank">${label}</a></li>`
+    }
+
+    function formatDuration(durationSeconds) {
+      const minutes = Math.floor(durationSeconds / 60)
+      const seconds = durationSeconds % 60
+      return `${minutes}:${seconds.toString().padStart(2, '0')}`
+    }
+
+    function getVideoInfo(id) {
+      showVideoDetails(id)
+    }
+  </script>
+  <div class="modal fade" id="video-details-modal" tabindex="-1" aria-labelledby="video-details-modal-title" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="video-details-modal-title"></h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" id="video-details-modal-body">
+          <div class="text-center">
+            <div class="spinner-border" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
