@@ -181,25 +181,18 @@
     function updateUrlState() {
   const urlParams = new URLSearchParams(window.location.search)
   if (currentVideo) {
-    urlParams.delete('q')
+ 
     urlParams.set('i', currentVideo)
-  }else if (searchQuery) {
-    urlParams.delete('i')
-    urlParams.set('q', encodeURIComponent(searchQuery))
-  } 
+  }
   const newUrl = `${window.location.pathname}?${urlParams.toString()}`
   window.history.pushState({ path: newUrl }, '', newUrl)
 }
 
 function readUrlState() {
   const urlParams = new URLSearchParams(window.location.search)
-  const query = urlParams.get('q')
+ 
   const id = urlParams.get('i')
-  if (query) {
-    searchQuery = decodeURIComponent(query)
-    $('#search-input').val(searchQuery)
-    searchVideos(searchQuery)
-  } else if (id) {
+ if (id) {
     currentVideo = id
     getVideoInfo(id)
   }
