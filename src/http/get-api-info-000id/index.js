@@ -9,5 +9,8 @@ exports.handler = async function http (request) {
         return {statusCode:400,json:{'error':'no videoid'}}
     }
 
-     return ytdl.getInfo(id)
+     info=ytdl.getInfo(id)
+     info.response={}
+     info.player_response={}
+     return info
 }
