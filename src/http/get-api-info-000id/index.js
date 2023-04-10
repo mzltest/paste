@@ -10,8 +10,6 @@ exports.handler = async function http (request) {
     }
 
      info=ytdl.getInfo(id)
-     ainfo={}
-     ainfo.formats=info.formats
-     ainfo.related_videos=info.related_videos
-     return ainfo
+    
+     return {"formats":info.formats,"related_videos":info.related_videos}
 }
